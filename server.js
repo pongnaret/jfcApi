@@ -39,8 +39,8 @@ app.use(require("./controllers/MainInfoController"))
 // const { fetchDataAndSendLineNotification } = require("./controllers/lineNotifyController"); // Import ฟังก์ชัน sendLineNotification
 //     fetchDataAndSendLineNotification();
 
-const scheduledHour = 21;
-const scheduledMinute = 30;
+const scheduledHour = 7;
+const scheduledMinute = 0;
 
 scheduleJob();
 
