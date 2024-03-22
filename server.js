@@ -39,8 +39,8 @@ app.use(require("./controllers/MainInfoController"))
 // const { fetchDataAndSendLineNotification } = require("./controllers/lineNotifyController"); // Import ฟังก์ชัน sendLineNotification
 //     fetchDataAndSendLineNotification();
 
-const scheduledHour = 20;
-const scheduledMinute = 0;
+const scheduledHour = 21;
+const scheduledMinute = 30;
 
 scheduleJob();
 
@@ -49,6 +49,8 @@ function scheduleJob() {
   const currentHour = currentDate.getHours();
   const currentMinute = currentDate.getMinutes();
 
+
+
   // ถ้าเวลาปัจจุบันเป็นเวลาที่เราต้องการให้ฟังก์ชันทำงาน
   if (currentHour === scheduledHour && currentMinute === scheduledMinute) {
     // เรียกใช้งานฟังก์ชันที่ต้องการให้โปรแกรมทำงาน
@@ -56,17 +58,9 @@ function scheduleJob() {
     fetchDataAndSendLineNotification();
   }
 
-  // คำนวณเวลาที่จะเรียกใช้งานในวันถัดไป
-  const nextExecutionTime = new Date();
-  nextExecutionTime.setDate(nextExecutionTime.getDate() + 1);
-  nextExecutionTime.setHours(scheduledHour);
-  nextExecutionTime.setMinutes(scheduledMinute);
 
-  // คำนวณเวลาที่เหลือจนถึงเวลาที่กำหนดให้ฟังก์ชันทำงานในวันถัดไป
-  const delayInMilliseconds = nextExecutionTime.getTime() - currentDate.getTime();
-
-  // ตั้งเวลาให้ฟังก์ชันทำงานในวันถัดไป
-  setTimeout(scheduleJob, delayInMilliseconds);
+  // ตรวจสอบทุก 1 นาที
+  setTimeout(scheduleJob, 60000)
 }
 
 // fetchDataAndSendLineNotification();
