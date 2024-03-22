@@ -5,8 +5,8 @@ require("dotenv").config();
 const Service = require("./Service");
 const PositionModel = require("../models/PositionModel");
 
-//app.get('/position/list', Service.isLogin, async (req, res) => {
-app.get("/position/list", async (req, res) => {
+app.get('/position/list', Service.isLogin, async (req, res) => {
+//app.get("/position/list", async (req, res) => {
   try {
     const results = await PositionModel.findAll({
       // where: {

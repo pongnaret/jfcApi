@@ -4,11 +4,11 @@ const EventModel = require("../models/EventModel");
 const EventUserModel = require("../models/EventUserModel");
 const MainInfoModel = require("../models/MainInfoModel")
 const axios = require("axios");
-const LINE_NOTIFY_ACCESS_TOKEN = "your_access_token_here";
+// const LINE_NOTIFY_ACCESS_TOKEN = "your_access_token_here";
 
-const startDate = new Date(); // วันที่ปัจจุบัน
-const endDate = new Date(startDate); // สร้างวัตถุ Date ใหม่โดยใช้วัตถุ Date ปัจจุบัน
-endDate.setDate(startDate.getDate() + 1); // เพิ่มหนึ่งวันไปยังวันที่ปัจจุบัน
+// const startDate = new Date(); // วันที่ปัจจุบัน
+// const endDate = new Date(startDate); // สร้างวัตถุ Date ใหม่โดยใช้วัตถุ Date ปัจจุบัน
+// endDate.setDate(startDate.getDate() + 1); // เพิ่มหนึ่งวันไปยังวันที่ปัจจุบัน
 
 let  message = "";
 //currentDate.setUTCHours(0, 0, 0, 0); // เพิ่มหนึ่งวัน
@@ -22,7 +22,10 @@ async function fetchDataAndSendLineNotification() {
   try {
     // ดึงข้อมูลจากฐานข้อมูล
     const currentDate = new Date(); // วันที่ปัจจุบัน
-    currentDate.setDate(currentDate.getDate() + 1); // เพิ่มหนึ่งวัน
+    const endDate = new Date(currentDate);
+    endDate.setDate(currentDate.getDate() + 1); // เพิ่มหนึ่งวัน
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - 1); // ลดหนึ่งวัน
 
     const results = await EventUserModel.findAll({
       where: {
