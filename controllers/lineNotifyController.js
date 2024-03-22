@@ -75,6 +75,66 @@ async function fetchDataAndSendLineNotification() {
   }
 }
 
+async function fetchDataTomorrowAndSendLineNotification() {
+  EventUserModel.belongsTo(EventModel);
+  EventUserModel.belongsTo(UserModel);
+
+  try {
+    // ดึงข้อมูลจากฐานข้อมูล
+    const currentDate = new Date(); // วันที่ปัจจุบัน
+    const endDate = new Date(currentDate);
+    endDate.setDate(currentDate.getDate() + 2); // เพิ่ม2วัน
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate()); // 
+
+    const results = await EventUserModel.findAll({
+      where: {
+        start: {
+          [Op.between]: [startDate, endDate],
+        },
+        //start: currentDate,
+        status: {
+          [Op.or]: [1, 2],
+        },
+      },
+      include: [{ model: EventModel }, { model: UserModel }],
+    });
+
+    // message = "วันที่ \n"+''+result.start;
+
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    results.forEach((result) => {
+      const date = result.start;
+      const eventName = result.Event.name;
+      const title = result.title;
+      const i = result.Event.length;
+
+      
+      const formattedDate = date.toLocaleDateString("th-TH", options);
+      // for (let i = 0; i < array.length; index++) {
+      //   const element = array[index];
+        
+      // }
+
+      message = "กิจกรรม" + formattedDate + " \n " + eventName + " \n" + title;
+
+      //console.log(message);
+      sendLineNotification(message); // ส่งข้อความผ่าน Line Notify
+    });
+
+    //console.log(message);
+    //sendLineNotification(message); // ส่งข้อความผ่าน Line Notify
+  } catch (error) {
+    console.error("เกิดข้อผิดพลาดในการดึงข้อมูลจากฐานข้อมูล:", error);
+  }
+}
+
 async function getTokenFromDatabase() {
   try {
     // เรียกใช้งานฟังก์ชันหรือเรียก API เพื่อดึง token จากฐานข้อมูล
