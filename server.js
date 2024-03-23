@@ -38,12 +38,12 @@ app.use(require("./controllers/MainInfoController"))
 
 const { fetchDataAndSendLineNotification, fetchDataTomorrowAndSendLineNotification } = require("./controllers/lineNotifyController");
 
-const scheduledHourADay = 7;
-const scheduledHourTomorrow = 17;
+const scheduledHourADay = 9;
+const scheduledHourTomorrow = 14;
 const scheduledMinute = 0;
 
 // ตั้งเวลาให้ทำงานทุก 1 ชั่วโมงตั้งแต่เวลา 3:00 นาฬิกาเป็นต้นไปจนถึง 23:59 นาฬิกา
-cron.schedule(`0 ${scheduledMinute} ${scheduledHourADay}-23 * * *`, () => {
+cron.schedule(`${scheduledMinute} ${scheduledHourADay}-23 * * *`, () => {
   fetchDataAndSendLineNotification();
 }, {
   scheduled: true,
@@ -51,7 +51,7 @@ cron.schedule(`0 ${scheduledMinute} ${scheduledHourADay}-23 * * *`, () => {
 });
 
 // ตั้งเวลาให้ทำงานเวลา 17:00 นาฬิกา ทุกวัน
-cron.schedule(`0 ${scheduledMinute} ${scheduledHourTomorrow} * * *`, () => {
+cron.schedule(`${scheduledMinute} ${scheduledHourTomorrow} * * *`, () => {
   fetchDataTomorrowAndSendLineNotification();
 }, {
   scheduled: true,
