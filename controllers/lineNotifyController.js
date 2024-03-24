@@ -23,7 +23,7 @@ async function fetchDataAndSendLineNotification() {
     // ดึงข้อมูลจากฐานข้อมูล
     const currentDate = new Date(); // วันที่ปัจจุบัน
     const endDate = new Date(currentDate);
-    endDate.setDate(currentDate.getDate() + 1); // เพิ่มหนึ่งวัน
+    endDate.setDate(currentDate.getDate()); // เพิ่มหนึ่งวัน
     const startDate = new Date(currentDate);
     startDate.setDate(currentDate.getDate() - 1); // ลดหนึ่งวัน
 
@@ -83,7 +83,7 @@ async function fetchDataTomorrowAndSendLineNotification() {
     // ดึงข้อมูลจากฐานข้อมูล
     const currentDate = new Date(); // วันที่ปัจจุบัน
     const endDate = new Date(currentDate);
-    endDate.setDate(currentDate.getDate() + 2); // เพิ่ม2วัน
+    endDate.setDate(currentDate.getDate() + 1); // เพิ่ม2วัน
     const startDate = new Date(currentDate);
     startDate.setDate(currentDate.getDate()); // 
 
